@@ -1,0 +1,102 @@
+[
+  {
+    "Id": "Ontario511--31dbwlph0yi",
+    "Organization": "Ontario511",
+    "RoadwayName": "Chesterton",
+    "Latitude": 45.352304,
+    "Longitude": -75.724945,
+    "Name": "a location1",
+    "Url": "https://511on.ca/map/Cctv/31dbwlph0yi--1",
+    "CityName": ""
+  },
+  {
+    "Id": "RWIS--600001-0-0",
+    "Organization": "RWIS",
+    "RoadwayName": "HWY 400",
+    "Latitude": 45.33142,
+    "Longitude": -79.96399,
+    "Name": "Highway 400 at Highway 518",
+    "Url": "https://511on.ca/map/Cctv/600001-0-0--1",
+    "CityName": ""
+  },
+  {
+    "Id": "RWIS--600001-0-1",
+    "Organization": "RWIS",
+    "RoadwayName": "HWY 400",
+    "Latitude": 45.33142,
+    "Longitude": -79.96399,
+    "Name": "Highway 400 at Highway 518",
+    "Url": "https://511on.ca/map/Cctv/600001-0-1--1",
+    "CityName": ""
+  },
+  {
+    "Id": "RWIS--600001-0-2",
+    "Organization": "RWIS",
+    "RoadwayName": "HWY 400",
+    "Latitude": 45.33142,
+    "Longitude": -79.96399,
+    "Name": "Highway 400 at Highway 518",
+    "Url": "https://511on.ca/map/Cctv/600001-0-2--1",
+    "CityName": ""
+  },
+  {
+    "Id": "RWIS--600002-0-0",
+    "Organization": "RWIS",
+    "RoadwayName": "HWY 17",
+    "Latitude": 46.22347,
+    "Longitude": -78.06786,
+    "Name": "Highway 17 at Bissett Creek",
+    "Url": "https://511on.ca/map/Cctv/600002-0-0--1",
+    "CityName": ""
+  },
+  {
+    "Id": "RWIS--600002-0-1",
+    "Organization": "RWIS",
+    "RoadwayName": "HWY 17",
+    "Latitude": 46.22347,
+    "Longitude": -78.06786,
+    "Name": "Highway 17 at Bissett Creek",
+    "Url": "https://511on.ca/map/Cctv/600002-0-1--1",
+    "CityName": ""
+  },
+  {
+    "Id": "RWIS--600002-0-2",
+    "Organization": "RWIS",
+    "RoadwayName": "HWY 17",
+    "Latitude": 46.22347,
+    "Longitude": -78.06786,
+    "Name": "Highway 17 at Bissett Creek",
+    "Url": "https://511on.ca/map/Cctv/600002-0-2--1",
+    "CityName": ""
+  },
+  {
+    "Id": "RWIS--600003-0-0",
+    "Organization": "RWIS",
+    "RoadwayName": "HWY 400",
+    "Latitude": 44.91844,
+    "Longitude": -79.774711,
+    "Name": "Highway 400 at Bay Road",
+    "Url": "https://511on.ca/map/Cctv/600003-0-0--1",
+    "CityName": ""
+  },
+  {
+    "Id": "RWIS--600003-0-1",
+    "Organization": "RWIS",
+    "RoadwayName": "HWY 400",
+    "Latitude": 44.91844,
+    "Longitude": -79.774711,
+    "Name": "Highway 400 at Bay Road",
+    "Url": "https://511on.ca/map/Cctv/600003-0-1--1",
+    "CityName": ""
+  },
+  {
+    "Id": "RWIS--600003-0-2",
+    "Organization": "RWIS",
+    "RoadwayName": "HWY 400",
+    "Latitude": 44.91844,
+    "Longitude": -79.774711,
+    "Name": "Highway 400 at Bay Road",
+    "Url": "https://511on.ca/map/Cctv/600003-0-2--1",
+    "CityName": ""
+  }
+]
