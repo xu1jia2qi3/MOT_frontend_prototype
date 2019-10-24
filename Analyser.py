@@ -8,7 +8,7 @@ import tensorflow as tf
 import numpy as np
 import requests
 import os
-from PIL import Image
+
 
 model = None
 
@@ -32,7 +32,7 @@ def load_model():
   top_model.add(Dense(4, activation='softmax'))
 
   model = Model(inputs=base_model.input, outputs=top_model(base_model.output))
-  model.load_weights(r'C:\Users\DD\Desktop\MOT\server\ResNet_trainAll_May.h5')
+  model.load_weights(r'C:\Users\DD\Desktop\server\ResNet_trainAll_May.h5')
   # model = tf.keras.models.load_model('./keras_model.h5')
   model._make_predict_function()
 
@@ -56,9 +56,9 @@ for root, dirnames, fnames in os.walk(dirpath):
         path = os.path.join('.', root, fname)
 
         image = Image.open(path)  
+        re_image = prepare_image(image)
         
-        Reversed_image = prepare_image(image)
-        preds = model.predict(Reversed_image)
+        preds = model.predict(re_image)
         print(preds)
 
 
