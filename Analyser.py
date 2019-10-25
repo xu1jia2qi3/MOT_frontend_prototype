@@ -8,6 +8,7 @@ import tensorflow as tf
 import numpy as np
 import requests
 import os
+from pathlib import Path
 
 
 model = None
@@ -50,16 +51,26 @@ def prepare_image(image):
 
 load_model()
 
-dirpath = 'snapshot'
-for root, dirnames, fnames in os.walk(dirpath):
-    for fname in fnames:
-        path = os.path.join('.', root, fname)
+# dirpath = 'snapshot'
 
-        image = Image.open(path)  
-        re_image = prepare_image(image)
+# for root, dirnames, fnames in os.walk(dirpath):
+#     for fname in fnames:
+#         path = os.path.join('.', root, fname)
+
+#         image = Image.open(path)  
+#         re_image = prepare_image(image)
         
+#         preds = model.predict(re_image)
+#         print(preds)
+folders = Path('./Snapshot/')
+for folder in folders.iterdir():
+    files = Path(f'./{folder}/')
+    for file in files.iterdir():        
+        image = Image.open(file)  
+        re_image = prepare_image(image)
         preds = model.predict(re_image)
         print(preds)
+        
 
 
     

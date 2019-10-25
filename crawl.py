@@ -16,8 +16,8 @@ async def fetch_image_by_id(url, img_id):
                 print(f'Download failed - {url}', e)
                 return
             save_folder = './Snapshot/'    
-            createFolder(f'{save_folder}/')            
-            with open(f'{save_folder}{img_id}.jpg', 'wb') as f:
+            createFolder(f'{save_folder}{img_id}/')            
+            with open(f'{save_folder}{img_id}/{img_id}.jpg', 'wb') as f:
                 f.write(image_data)
             print(f'Download complete - {img_id}.jpg')
 
