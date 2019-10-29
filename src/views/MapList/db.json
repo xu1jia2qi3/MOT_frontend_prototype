@@ -1,0 +1,434 @@
+[
+  {
+    "crossing_id": "23984",
+    "location_id": "1763512",
+    "railway": "Laggan Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "11 St SW (Along 10 Ave SW)",
+    "position": {
+      "lat": 51.04472,
+      "lng": -114.08874
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "24827",
+    "location_id": "1763533",
+    "railway": "Macleod Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "58 Avenue W Centre St Se",
+    "position": {
+      "lat": 51.00135,
+      "lng": -114.065
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "24828",
+    "location_id": "1763536",
+    "railway": "Macleod Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "61 Ave & Ctr St Se - Lrt",
+    "position": {
+      "lat": 50.99771,
+      "lng": -114.06557
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "35802",
+    "location_id": "1763515",
+    "railway": "Laggan Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Douglas Fir Trail",
+    "position": {
+      "lat": 51.0555,
+      "lng": -114.1408
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "24009",
+    "location_id": "1763519",
+    "railway": "Laggan Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "32 Ave NW (67 St NW)",
+    "position": {
+      "lat": 51.0815,
+      "lng": -114.184
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "762544",
+    "location_id": "1763538",
+    "railway": "Macleod Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Anderson Lrt Bus Crossing",
+    "position": {
+      "lat": 50.9515,
+      "lng": -114.0736
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "762549",
+    "location_id": "1763540",
+    "railway": "Macleod Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Shawnessy Lrt Pedestrian",
+    "position": {
+      "lat": 50.9107,
+      "lng": -114.0704
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "35286",
+    "location_id": "1763542",
+    "railway": "Macleod Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "162 Avenue",
+    "position": {
+      "lat": 50.90316,
+      "lng": -114.07048
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "762550",
+    "location_id": "1763544",
+    "railway": "Macleod Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Somerset-Bridlewood Lrt",
+    "position": {
+      "lat": 50.89982,
+      "lng": -114.06924
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "762530",
+    "location_id": "1763549",
+    "railway": "Macleod Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Shawville Gate Sw",
+    "position": {
+      "lat": 50.8984,
+      "lng": -114.06836
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "27453",
+    "location_id": "1763423",
+    "railway": "Red Deer Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Hwy 582 (E Of 20 St)",
+    "position": {
+      "lat": 51.66622,
+      "lng": -114.13666
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "27469",
+    "location_id": "1763427",
+    "railway": "Red Deer Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Twp 320 (E. Of Rge Rd 21)",
+    "position": {
+      "lat": 51.70764,
+      "lng": -114.16327
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "27471",
+    "location_id": "1763429",
+    "railway": "Red Deer Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Twp 322 (E. Of Rge Rd 20)",
+    "position": {
+      "lat": 51.73679,
+      "lng": -114.14179
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "27474",
+    "location_id": "1763433",
+    "railway": "Red Deer Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "54 St (W. Of 48 Ave)",
+    "position": {
+      "lat": 51.78784,
+      "lng": -114.10635
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "27475",
+    "location_id": "1763440",
+    "railway": "Red Deer Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "50 St. (W. Of 48 Ave)",
+    "position": {
+      "lat": 51.79189,
+      "lng": -114.10445
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "23134",
+    "location_id": "1763456",
+    "railway": "Indian head Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Chatham St (S. Of N. Pacific Ave)",
+    "position": {
+      "lat": 50.5375,
+      "lng": -103.885
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "23150",
+    "location_id": "1763460",
+    "railway": "Indian head Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Rge Rd 2170",
+    "position": {
+      "lat": 50.5,
+      "lng": -104.206
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "24415",
+    "location_id": "1763386",
+    "railway": "Leduc Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "65 Ave",
+    "position": {
+      "lat": 53.2797,
+      "lng": -113.54457
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "23156",
+    "location_id": "1763462",
+    "railway": "Indian head Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Ladysmith Rd (Along Twp Rd 180)",
+    "position": {
+      "lat": 50.4844,
+      "lng": -104.343
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "23161",
+    "location_id": "1763464",
+    "railway": "Indian head Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Rge Rd 2185 (S. Of Hwy 46)",
+    "position": {
+      "lat": 50.4755,
+      "lng": -104.458
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "600510",
+    "location_id": "1763390",
+    "railway": "Leduc Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Ellerslie Rd SW",
+    "position": {
+      "lat": 53.4248,
+      "lng": -113.4854
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "725011",
+    "location_id": "1763472",
+    "railway": "K Lead Spur off Headblock Mile 91.47",
+    "crossing_type": "AWS",
+    "address": "Indian head Subdivision (Canadian Pacific)",
+    "position": {
+      "lat": 50.4782,
+      "lng": -104.5589
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "23172",
+    "location_id": "1763476",
+    "railway": "Indian head Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Park St (S. Of 6 Ave)",
+    "position": {
+      "lat": 50.4597,
+      "lng": -104.5723
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "762555",
+    "location_id": "1763395",
+    "railway": "Leduc Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "19 Ave",
+    "position": {
+      "lat": 53.4468,
+      "lng": -113.4897
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "600488",
+    "location_id": "1763404",
+    "railway": "Brooks Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Hwy 901 (S. Of Hwy 1)",
+    "position": {
+      "lat": 50.85492,
+      "lng": -113.01686
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "19832",
+    "location_id": "1763407",
+    "railway": "Brooks Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Hwy 547 (Along Of Crowfoot St)",
+    "position": {
+      "lat": 50.86321,
+      "lng": -113.05165
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "19833",
+    "location_id": "1763409",
+    "railway": "Brooks Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Range Road 231",
+    "position": {
+      "lat": 50.8706,
+      "lng": -113.0744
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "16890",
+    "location_id": "1763442",
+    "railway": "Watrous Subdivision (Canadian National)",
+    "crossing_type": "AWS",
+    "address": "Hwy 2",
+    "position": {
+      "lat": 51.6632,
+      "lng": -105.4466
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "47831",
+    "location_id": "1763445",
+    "railway": "Watrous Subdivision (Canadian National)",
+    "crossing_type": "AWS",
+    "address": "Grid Road 734",
+    "position": {
+      "lat": 51.675,
+      "lng": -105.4796
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "19836",
+    "location_id": "1763416",
+    "railway": "Brooks Subdivision (Canadian Pacific)",
+    "crossing_type": "AWS",
+    "address": "Hwy 901 (Along Twp Rd 223)",
+    "position": {
+      "lat": 50.877,
+      "lng": -113.167
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "16897",
+    "location_id": "1763448",
+    "railway": "Watrous Subdivision (Canadian National)",
+    "crossing_type": "AWS",
+    "address": "E-W Grid Road (35-31-26)",
+    "position": {
+      "lat": 51.707,
+      "lng": -105.584
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "16905",
+    "location_id": "1763451",
+    "railway": "Watrous Subdivision (Canadian National)",
+    "crossing_type": "AWS",
+    "address": "Grand Avenue",
+    "position": {
+      "lat": 51.76746,
+      "lng": -105.74898
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "17144",
+    "location_id": "1763490",
+    "railway": "Wainwright Subdivision (Canadian National)",
+    "crossing_type": "AWS",
+    "address": "Range Road 130",
+    "position": {
+      "lat": 53.0871,
+      "lng": -111.76
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "17147",
+    "location_id": "1763496",
+    "railway": "Wainwright Subdivision (Canadian National)",
+    "crossing_type": "AWS",
+    "address": "Range Road 133",
+    "position": {
+      "lat": 53.1093,
+      "lng": -111.833
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "17167",
+    "location_id": "1763500",
+    "railway": "Wainwright Subdivision (Canadian National)",
+    "crossing_type": "AWS",
+    "address": "Main Street",
+    "position": {
+      "lat": 53.2308,
+      "lng": -112.237
+    },
+    "select": false
+  },
+  {
+    "crossing_id": "17174",
+    "location_id": "1763504",
+    "railway": "Wainwright Subdivision (Canadian National)",
+    "crossing_type": "AWS",
+    "address": "Range Road 171",
+    "position": {
+      "lat": 53.2698,
+      "lng": -112.368
+    },
+    "select": false
+  }
+]

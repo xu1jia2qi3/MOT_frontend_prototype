@@ -1,0 +1,44 @@
+[
+  {
+    "location_id":1763341,
+    "type":"A - WIS",
+    "address":null,
+    "crossing_id":"1763341",
+    "rsig_id":null,
+    "region":"PAC",
+    "railway":"Canadian Pacific Railway",
+    "railway_short":"CP",
+    "last_inspector":null,
+    "last_inspect_date":null,
+    "service_date":null,
+    "jurisdiction":null,
+    "subdivision":"Leduc",
+    "position":{
+      "lng":null,
+      "lat":null
+    },
+    "authority":null,
+    "select":false
+  },
+  {
+    "location_id":1763696,
+    "type":"A - WSS",
+    "address":"Crecy",
+    "crossing_id":"1763696",
+    "rsig_id":null,
+    "region":"PAC",
+    "railway":"Canadian Pacific Railway",
+    "railway_short":"CP",
+    "last_inspector":null,
+    "last_inspect_date":null,
+    "service_date":null,
+    "jurisdiction":null,
+    "subdivision":"Indian Head",
+    "position":{
+      "lng":null,
+      "lat":null
+    },
+    "authority":null,
+    "select":false
+  }
+]
