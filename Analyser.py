@@ -9,8 +9,11 @@ import numpy as np
 import requests
 import os
 from pathlib import Path
+import redis
+import datetime
+import pickle
 
-
+db = redis.Redis(host="localhost", port=6379)
 model = None
 
 
@@ -61,15 +64,27 @@ load_model()
 #         re_image = prepare_image(image)
         
 #         preds = model.predict(re_image)
-#         print(preds)
+#         print(root)
 folders = Path('./Snapshot/')
 for folder in folders.iterdir():
     files = Path(f'./{folder}/')
     for file in files.iterdir():        
         image = Image.open(file)  
         re_image = prepare_image(image)
-        preds = model.predict(re_image)
-        print(preds)
+        preds = model.predict(re_image).tolist()
+        results = {"time": str(datetime.datetime.now()), "preds" : preds}      
+        name = os.path.relpath(folder,'Snapshot')
+        # add pickled results to database
+        db = redis.Redis(host="localhost", port=6379, db=0)
+        data = pickle.dumps(results)
+        db.set(name, data)
+
+        #read from database and pickled
+        # read_dict = db.get(name)
+        # yourdict = pickle.loads(read_dict)
+        # print(yourdict)
+      
+
         
 
 
