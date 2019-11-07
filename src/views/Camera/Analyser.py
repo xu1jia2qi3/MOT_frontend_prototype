@@ -79,7 +79,7 @@ for folder in folders.iterdir():
         data = pickle.dumps(results)
         db.set(name, data)
 
-        #read from database and pickled
+        # read from database and pickled
         # read_dict = db.get(name)
         # yourdict = pickle.loads(read_dict)
         # print(yourdict)

@@ -278,32 +278,7 @@ export default {
         }
       },
       show_list: ['0', '1', '2', '3'],
-      gridSize: 100,
-      // clusterStyles: [
-      //   {
-      //     url: require('@/assets/safety.png'),
-      //     height: 26,
-      //     width: 30,
-      //     anchor: [4, 0],
-      //     textColor: '#ff00ff',
-      //     textSize: 10
-      //   },
-      //   {
-      //     url: require('@/assets/snow.png'),
-      //     height: 35,
-      //     width: 40,
-      //     anchor: [8, 0],
-      //     textColor: '#ff0000',
-      //     textSize: 11
-      //   },
-      //   {
-      //     url: require('@/assets/warning.png'),
-      //     width: 50,
-      //     height: 44,
-      //     anchor: [12, 0],
-      //     textSize: 12
-      //   }
-      // ],
+      gridSize: 100,      
       zoom_level: 6,
       current_camera: {
         Id: 'Ontario511--31dbwlph0yi',
@@ -342,6 +317,17 @@ export default {
         return require('@/assets/snow.png')
       }
     },
+    // getMarkerIcon (probability) {
+    //   if (probability[0] >= 50) {
+    //     return require('@/assets/safety.png')
+    //   } else if (probability[1] >= 50) {
+    //     return require('@/assets/camera.png')
+    //   } else if (probability[2] >= 50) {
+    //     return require('@/assets/warning.png')
+    //   } else {
+    //     return require('@/assets/snow.png')
+    //   }
+    // },
     isMarkerShow (index) {
       // here use the fake label
       let label = index % 4
