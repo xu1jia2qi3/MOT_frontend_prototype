@@ -1,4 +1,4 @@
-# gradex
+# Snowfall AI predicting
 
 > A Vue.js project, prototype for MOT, navigate to http://localhost:8080/#/camera for views
 
