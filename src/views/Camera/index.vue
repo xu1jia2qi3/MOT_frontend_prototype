@@ -81,7 +81,7 @@
                         <v-list-tile-content>
                           <v-list-tile-title>Not Recognizable: {{ (probability[3] * 100).toFixed(2) }}%</v-list-tile-title>
                         </v-list-tile-content>
-                      </v-list-tile>
+                      </v-list-tile>                      
                     </v-list>
                   </v-card>
                 </v-flex>
@@ -155,15 +155,16 @@
               <v-checkbox v-model="show_list" label="Bare Pavement" value="0"></v-checkbox>
               <v-checkbox v-model="show_list" label="Partly Coverage" value="1"></v-checkbox>
               <v-checkbox v-model="show_list" label="Fully Coverage" value="2"></v-checkbox>
-              <v-checkbox v-model="show_list" label="Not Recognizable" value="3"></v-checkbox>
-            </v-container>
+              <v-checkbox v-model="show_list" label="Not Recognizable" value="3"></v-checkbox>              
+            </v-container>                          
+            
           </v-flex>
 
           <!-- Right Panel -->
           <v-flex xs9 sm9 md9 id="mapview">
             <google-map :center="{lat: current_camera.Latitude, lng: current_camera.Longitude}" :zoom="zoom_level" style="width: 100%; height: 100%;">
               <!-- <google-cluster :grid-size="gridSize" :styles="clusterStyles"> -->
-              <google-cluster>
+              <google-cluster :minimumClusterSize=10>
                 <google-info-window 
                   :options="info_options"
                   :position="{lat: current_camera.Latitude, lng: current_camera.Longitude}"
@@ -223,23 +224,23 @@
                     </v-flex>
                   </v-layout>
                 </google-info-window>
-                <google-marker 
+                <google-marker                   
                   v-for="(item, index) in camera_list" 
                   :position="{lat: item.Latitude + Math.random()/5000, lng: item.Longitude + Math.random()/5000}" 
                   :clickable="true"
-                  :icon="getMarkerIcon(index)"
+                  :icon="getMarkerIcon(item.Url)"
                   @click="toggleInfoWindow(item)" 
                   :key="index"
-                  v-if="isMarkerShow(index)"
+                  v-if="loading && isMarkerShow(index) "                  
                 >
                 </google-marker>
               </google-cluster>
-            </google-map>
+            </google-map>    
           </v-flex>
         </v-layout>
       </v-container>
-    </v-content>
-  </v-app>
+    </v-content>    
+  </v-app>  
 </template>
 
 <script>
@@ -278,7 +279,7 @@ export default {
         }
       },
       show_list: ['0', '1', '2', '3'],
-      gridSize: 100,      
+      gridSize: 100,
       zoom_level: 6,
       current_camera: {
         Id: 'Ontario511--31dbwlph0yi',
@@ -294,40 +295,63 @@ export default {
       info_win_open: false,
       probability: [0, 0, 0, 0],
       mediaDialog: false,
-      files: []
+      files: [],
+      allPreds: {},
+      loading: false
     }
+  },
+  mounted: function () {
+    this.getAllPreds()
   },
   methods: {
     goBack () {
       this.$router.go(-1)
     },
     toggleInfoWindow (camera) {
-      this.probability = [0, 0, 0, 0]
+      // const self = this
+      const url = camera.Url
+      const result = url.split('/')
+      const id = result[result.length - 1]
+      let preds
+      // only for debugging.
+      if (!this.allPreds[id]) {
+        preds = [0, 0, 0, 1]
+      } else {
+        preds = this.allPreds[id]['preds'][0]
+      }
+      this.probability = preds
+      // console.log('probability', this.probability)
+      // console.log('time', time)
       this.current_camera = camera
+      // console.log('camera', this.current_camera)
       this.info_win_open = true
     },
-    getMarkerIcon (index) {
-      if (index % 4 === 0) {
+    argMax (array) {
+      return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1]
+    },
+    getMarkerIcon (url) {
+      const result = url.split('/')
+      const id = result[result.length - 1]
+      let preds
+      // only for debugging.
+      if (!this.allPreds[id]) {
+        preds = [0, 0, 0, 1]
+      } else {
+        preds = this.allPreds[id]['preds'][0]
+        // console.log(preds)
+      }
+      const index = this.argMax(preds)
+      // console.log('????', preds)
+      if (index === 0) {
         return require('@/assets/safety.png')
-      } else if (index % 4 === 1) {
-        return require('@/assets/camera.png')
-      } else if (index % 4 === 2) {
+      } else if (index === 1) {
+        return require('@/assets/snow.png')
+      } else if (index === 2) {
         return require('@/assets/warning.png')
       } else {
-        return require('@/assets/snow.png')
+        return require('@/assets/camera.png')
       }
     },
-    // getMarkerIcon (probability) {
-    //   if (probability[0] >= 50) {
-    //     return require('@/assets/safety.png')
-    //   } else if (probability[1] >= 50) {
-    //     return require('@/assets/camera.png')
-    //   } else if (probability[2] >= 50) {
-    //     return require('@/assets/warning.png')
-    //   } else {
-    //     return require('@/assets/snow.png')
-    //   }
-    // },
     isMarkerShow (index) {
       // here use the fake label
       let label = index % 4
@@ -388,6 +412,24 @@ export default {
         }
       }
     },
+    getAllPreds () {
+      const self = this
+      axios.get('http://127.0.0.1:5000')
+        .then(function (response) {
+          // console.log(response)
+          for (var key in response.data) {
+            self.allPreds[key] = response.data[key]
+          }
+          self.loading = true
+          // console.log(self.allPreds)
+          // console.log(self.allPreds)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+        .finally(function () {
+        })
+    },
     getPrediction (cameraID, imageUrl) {
       console.log(cameraID, imageUrl)
       let bodyFormData = new FormData()
@@ -401,6 +443,7 @@ export default {
       })
         .then((response) => {
           console.log(response)
+
           self.probability = response.data.predictions[0]
         })
         .catch((error) => {
