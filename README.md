@@ -1,7 +1,6 @@
 # gradex
 
-> A highway snow predict project (front-end) by Vue.js
-> navigate to http://localhost:8080/#/camera for view
+> A highway snow predict project (front-end) by Vue.js, navigate to http://localhost:8080/#/camera for view
 
 ## Build Setup
 
