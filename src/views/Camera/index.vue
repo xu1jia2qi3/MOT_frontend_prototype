@@ -414,7 +414,7 @@ export default {
     },
     getAllPreds () {
       const self = this
-      axios.get('http://127.0.0.1:5000')
+      axios.get('http://35.185.8.182:5000/database')
         .then(function (response) {
           // console.log(response)
           for (var key in response.data) {
