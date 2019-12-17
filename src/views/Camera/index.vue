@@ -169,7 +169,7 @@
                   :options="info_options"
                   :position="{lat: current_camera.Latitude, lng: current_camera.Longitude}"
                   :opened="info_win_open"
-                  @closeclick="info_win_open=false"
+                  @closeclick="info_win_open=false, submitted=false, refreshed=false"
                 >
                   <v-layout wrap row>
                     <v-flex xs12 sm12 md12>
@@ -219,8 +219,21 @@
                        color="primary"
                        @click.stop="getPrediction(current_camera.Id, current_camera.Url)"
                       >
-                       Classify
+                       Refresh
                       </v-btn>
+                    </v-flex>
+                    <v-flex xs12 sm12 v-if="refreshed">                        
+                        <form>
+                          <p>Not correct? Try to update your result</p>
+                          <v-btn large color="primary" @click.stop="submitReTrain(reTraining.result, current_camera.Url)" >submit</v-btn><br>
+                          <input type="radio" value="Bare Pavement" v-model="reTraining.result">Bare Pavement<br>
+                          <input type="radio" value="Partly Coverage" v-model="reTraining.result">Partly Coverage<br>
+                          <input type="radio" value="Fully Coverage" v-model="reTraining.result">Fully Coverage<br>
+                          <input type="radio" value="Not Recognizable" v-model="reTraining.result">Not Recognizable<br>
+                        </form>                         
+                        <div v-if="submitted">
+                          <h3>Thanks for Training Our AI!</h3>
+                        </div> 
                     </v-flex>
                   </v-layout>
                 </google-info-window>
@@ -267,7 +280,12 @@ export default {
   name: 'MapList',
   data () {
     return {
+      // dialogm1: '',
+      // dialog: false,
       // Map Data
+      reTraining: {
+        result: 'Bare Pavement'
+      },
       center: {
         lat: 52.368011,
         lng: -109.924447
@@ -297,10 +315,12 @@ export default {
       mediaDialog: false,
       files: [],
       allPreds: {},
-      loading: false
+      loading: false,
+      submitted: false,
+      refreshed: false
     }
   },
-  mounted: function () {
+  created: function () {
     this.getAllPreds()
   },
   methods: {
@@ -308,6 +328,8 @@ export default {
       this.$router.go(-1)
     },
     toggleInfoWindow (camera) {
+      this.submitted = false
+      this.refreshed = false
       // const self = this
       const url = camera.Url
       const result = url.split('/')
@@ -414,8 +436,8 @@ export default {
     },
     getAllPreds () {
       const self = this
-      axios.get('http://35.185.8.182:5000/database')
-      // axios.get('http://127.0.0.1:5000/database')
+      // axios.get('http://35.185.8.182:5000/database')
+      axios.get('http://127.0.0.1:5000/database')
         .then(function (response) {
           // console.log(response)
           for (var key in response.data) {
@@ -433,6 +455,7 @@ export default {
     },
     getPrediction (cameraID, imageUrl) {
       console.log(cameraID, imageUrl)
+      this.refreshed = true
       let bodyFormData = new FormData()
       bodyFormData.set('camera_id', cameraID)
       bodyFormData.set('image_url', imageUrl)
@@ -446,6 +469,26 @@ export default {
           console.log(response)
 
           self.probability = response.data.predictions[0]
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    submitReTrain (result, imageUrl) {
+      console.log(result, imageUrl)
+      this.submitted = true
+      // send result to server
+      let retrain = new FormData()
+      retrain.set('image_url', imageUrl)
+      retrain.set('result', result)
+      axios({
+        method: 'post',
+        // url: 'http://35.185.8.182:5000/retrain',
+        url: 'http://127.0.0.1:5000/retrain',
+        data: retrain
+      })
+        .then((response) => {
+          console.log(response)
         })
         .catch((error) => {
           console.log(error)
