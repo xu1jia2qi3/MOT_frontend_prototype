@@ -436,8 +436,8 @@ export default {
     },
     getAllPreds () {
       const self = this
-      // axios.get('http://35.185.8.182:5000/database')
-      axios.get('http://127.0.0.1:5000/database')
+      axios.get('http://35.185.8.182:5000/database')
+      // axios.get('http://127.0.0.1:5000/database')
         .then(function (response) {
           // console.log(response)
           for (var key in response.data) {
@@ -483,8 +483,8 @@ export default {
       retrain.set('result', result)
       axios({
         method: 'post',
-        // url: 'http://35.185.8.182:5000/retrain',
-        url: 'http://127.0.0.1:5000/retrain',
+        url: 'http://35.185.8.182:5000/retrain',
+        // url: 'http://127.0.0.1:5000/retrain',
         data: retrain
       })
         .then((response) => {
