@@ -262,7 +262,6 @@ export default {
       this.series = this.probability;
     },
     submitReTrain(result, imageUrl) {
-      console.log(result, imageUrl);
       // send result to server
       const retrain = new FormData();
       retrain.set('image_url', imageUrl);
