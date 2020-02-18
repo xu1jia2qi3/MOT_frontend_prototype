@@ -248,13 +248,13 @@ export default {
         // console.log(fixedNumber);
         this.probability = fixedNumber;
         this.current_camera = camera;
-        this.camera_pic = `http://127.0.0.1:5000/Snapshot/${id}/${item}.jpg`;
+        this.camera_pic = `http://35.231.155.22:5000/Snapshot/${id}/${item}.jpg`;
       });
       // console.log(this.allPreds[id]);
       this.allPreds[id].forEach(item => {
         const timestamp = Object.keys(item);
         const EachPic = {
-          url: `http://127.0.0.1:5000/Snapshot/${id}/${timestamp}.jpg`,
+          url: `http://35.231.155.22:5000/Snapshot/${id}/${timestamp}.jpg`,
           time: timestamp[0]
         };
         this.history_items.unshift(EachPic);
@@ -269,8 +269,8 @@ export default {
       retrain.set('result', result);
       axios({
         method: 'post',
-        // url: 'http://35.231.155.22:5000/retrain',
-        url: 'http://127.0.0.1:5000/retrain',
+        url: 'http://35.231.155.22:5000/retrain',
+        // url: 'http://127.0.0.1:5000/retrain',
         data: retrain
       })
         .then(response => {
@@ -290,9 +290,9 @@ export default {
     getAllPreds() {
       const self = this;
       axios
-        // .get('http://35.231.155.22:5000/database')
+        .get('http://35.231.155.22:5000/database')
         // axios.get('http://35.185.8.182:5000/database')
-        .get('http://127.0.0.1:5000/database')
+        // .get('http://127.0.0.1:5000/database')
         .then(response => {
           Object.keys(response.data).forEach(key => {
             self.allPreds[key] = response.data[key];
