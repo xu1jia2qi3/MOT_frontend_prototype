@@ -62,7 +62,7 @@
             Wrong Result?
             <v-icon dark right>mdi-alert-circle-outline</v-icon>
           </v-chip>
-          <h3 class="top_title"> Current Camera: {{ current_camera.Id }}</h3>
+          <h3 class="top_title">Camera: {{ current_camera.Id }}</h3>
         </div>
 
         <apexchart
