@@ -371,6 +371,7 @@ export default {
 }
 .TopHalf {
   max-height: 50%;
+  width: 100%;
   position: absolute;
   top: 0;
 }
