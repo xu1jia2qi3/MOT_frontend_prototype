@@ -1,26 +1,22 @@
 <template>
   <v-content app>
-    <!-- <v-container class="fill-height" fluid> -->
-    <!-- <v-row align="center" justify="center"> -->
-    <!-- <v-col class="shrink"> -->
     <v-toolbar height="32" class="toolbar">
-      <!-- <p>{{ show_list }}</p> -->
       <div class="barcontainer">
         <div class="barSamplesbox">
           <img class="barSamples" src="../assets/safety.png" alt />
-          <v-checkbox v-model="show_list" label="Bare Pavement" value="0"></v-checkbox>
+          <v-checkbox color="white" v-model="show_list" label="Bare Pavement" value="0"></v-checkbox>
         </div>
         <div class="barSamplesbox">
           <img class="barSamples" src="../assets/snow.png" alt />
-          <v-checkbox v-model="show_list" label="Partly Coverage" value="1"></v-checkbox>
+          <v-checkbox color="white" v-model="show_list" label="Partly Coverage" value="1"></v-checkbox>
         </div>
         <div class="barSamplesbox">
           <img class="barSamples" src="../assets/warning.png" alt />
-          <v-checkbox v-model="show_list" label="Fully Coverage" value="2"></v-checkbox>
+          <v-checkbox color="white" v-model="show_list" label="Fully Coverage" value="2"></v-checkbox>
         </div>
         <div class="barSamplesbox">
           <img class="barSamples" src="../assets/camera.png" alt />
-          <v-checkbox v-model="show_list" label="Not Recognizable" value="3"></v-checkbox>
+          <v-checkbox color="white" v-model="show_list" label="Not Recognizable" value="3"></v-checkbox>
         </div>
       </div>
     </v-toolbar>
@@ -56,37 +52,33 @@
       class="navigationdrawer"
     >
       <div class="TopHalf">
+        <h3 class="top_title">Camera: {{ current_camera.Id }} Latest Condition</h3>
         <img class="currentPic" v-bind:src="camera_pic" />
-        <div class="title_button">
-          <v-chip class="top-button" color="teal" text-color="white" @click="dialog2 = true">
-            Wrong Result?
-            <v-icon dark right>mdi-alert-circle-outline</v-icon>
-          </v-chip>
-          <h3 class="top_title">Camera: {{ current_camera.Id }}</h3>
-        </div>
-
+      </div>
+      <div class="BotHalf">
+        <h3 style="height:10%; text-align:center">Snow Coverage Analysis</h3>
         <apexchart
           class="result"
           type="donut"
-          height="35%"
+          height="70%"
           :options="chartOptions"
           :series="series"
         ></apexchart>
-      </div>
-      <div class="BottomHalf">
-        <div class="draw_title">
-          <v-chip class="history_button" color="teal" text-color="white" dark @click="updateChart">
-            Historical Analysis
-            <v-icon dark right>mdi-replay</v-icon>
-          </v-chip>
-          <h3 id="draw_title_history">History Replay</h3>
+        <div class="botgroup">
+          <div style="width:50%; text-align:center">
+            <!-- <v-btn outlined color="white">Outlined Button</v-btn> -->
+            <v-btn class="BotBottonL" outlined color="white" @click="dialog2 = true">
+              Wrong Result?
+              <v-icon dark right>mdi-alert-circle-outline</v-icon>
+            </v-btn>
+          </div>
+          <div style="width:50%; text-align:center">
+            <v-btn class="BotBottonR" outlined color="white" @click="updateChart">
+              Historical Analysis
+              <v-icon dark right>mdi-cached</v-icon>
+            </v-btn>
+          </div>
         </div>
-        <v-carousel class="carouselcontainer">
-          <v-carousel-item v-for="(item,i) in history_items" :key="i">
-            <img class="carouselPic" :src="item.url" />
-            <div class="title">{{item.time}}</div>
-          </v-carousel-item>
-        </v-carousel>
       </div>
       <v-dialog v-model="dialog2" max-width="300px">
         <v-card light>
@@ -118,16 +110,31 @@
           </v-card-title>
         </v-card>
       </v-dialog>
+      <v-dialog v-model="dialog4" max-width="200px">
+        <h3 style="text-align:center">Loading All Cameras</h3>
+        <v-progress-linear color="deep-purple accent-4" indeterminate rounded height="6"></v-progress-linear>
+      </v-dialog>
       <v-dialog v-model="dialog" max-width="800" light>
-        <v-card>
-          <!-- <Chart :MyData = "history_data"/> -->
-          <Chart :MyData="history_data" ref="chart" />
+        <v-card style="height:80vh">
+          <h2 style="text-align:center;height:4%">Snow Coverage History</h2>
+          <div style="height:45%">
+            <v-carousel class="carouselcontainer" v-model="model">
+              <v-carousel-item
+                style="height:100% !important"
+                v-for="(item,i) in history_items"
+                :key="i"
+              >
+                <img class="carouselPic" :src="item.url" />
+              </v-carousel-item>
+            </v-carousel>
+          </div>
+          <div style="height:48%">
+            <!-- <h3 style="height:5%">Current Photo: {{model +1}}</h3> -->
+            <Chart :MyData="history_data" :myIndex="model" ref="chart" @clicked="onClickChild" />
+          </div>
         </v-card>
       </v-dialog>
     </v-navigation-drawer>
-    <!-- </v-col> -->
-    <!-- </v-row> -->
-    <!-- </v-container> -->
   </v-content>
 </template>
 
@@ -159,7 +166,9 @@ export default {
   },
   data() {
     return {
+      model: 11,
       reTraining: 'Bare Pavement',
+      dialog4: true,
       dialog3: false,
       dialog2: false,
       history_data: [],
@@ -198,7 +207,7 @@ export default {
         ],
         legend: {
           position: 'right',
-          fontSize: '12px',
+          fontSize: '14px',
           offsetX: 0,
           offsetY: 0
         },
@@ -219,8 +228,14 @@ export default {
     }
   },
   methods: {
+    onClickChild(value) {
+      if (value !== -1) {
+        this.model = value;
+      }
+    },
     updateChart() {
       this.dialog = true;
+      this.model = 11;
       this.$refs.chart.showData();
     },
     toggleInfoWindow(camera) {
@@ -297,6 +312,7 @@ export default {
             self.allPreds[key] = response.data[key];
           });
           self.loading = true;
+          this.dialog4 = false;
         })
         .catch(error => {
           console.log(error);
@@ -354,20 +370,15 @@ export default {
   height: 100vh;
 }
 .TopHalf {
-  height: 60%;
-}
-.BottomHalf {
-  height: 40%;
-}
-.title {
+  max-height: 50%;
   position: absolute;
-  top: 8%;
-  color: red;
-  /* left: 50%;
-  transform: translateX(-50%); */
-  /* font-size: 1vw; */
-  width: 50%;
-  height: 4%;
+  top: 0;
+}
+.BotHalf {
+  height: 40%;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 .map {
   width: 100%;
@@ -391,7 +402,9 @@ export default {
 }
 .navigationdrawer {
   width: 33% !important;
+  min-width: 365px;
   height: 100% !important;
+  min-height: 470px;
 }
 .draw_title {
   text-align: center;
@@ -405,26 +418,29 @@ export default {
   align-self: center;
 }
 .carouselcontainer {
-  height: 92% !important;
+  height: 100% !important;
 }
 .carouselPic {
   width: 100%;
+  height: 67%;
 }
-.top-button {
-  height: 100%;
-}
-.history_button {
-  height: 100%;
-  /* transform: translateX(-50%); */
-}
+
 .currentPic {
   width: 100%;
   max-height: 60%;
 }
-.title_button {
-  height: 5%;
+.botgroup {
+  width: 100%;
+  height: 10%;
+  bottom: 1vh;
+  position: absolute;
   display: flex;
-  text-align: center;
+}
+.BotBottonL {
+  height: auto;
+}
+.BotBottonR {
+  height: auto;
 }
 .result {
   height: 35%;

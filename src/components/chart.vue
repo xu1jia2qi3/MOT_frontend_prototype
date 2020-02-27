@@ -1,20 +1,42 @@
 <template>
-  <div>
-    <apexcharts type="bar" height="350" :options="chartOptions" :series="series"></apexcharts>
-  </div>
+  <apexcharts type="bar" height="95%" :options="chartOptions" :series="series"></apexcharts>
 </template>
 
 <script>
 import VueApexCharts from 'vue-apexcharts';
 
 export default {
-  props: ['MyData'],
+  props: ['MyData', 'myIndex'],
   name: 'Chart',
   components: {
     apexcharts: VueApexCharts
   },
+  data() {
+    return {
+      Xcolors: Array(12).fill('black'),
+      series: [],
+      chartOptions: {}
+    };
+  },
   created() {
     this.showData();
+  },
+  watch: {
+    myIndex(i) {
+      // console.log(i);
+      this.Xcolors = Array(12).fill('black');
+      this.Xcolors[i] = 'red';
+      this.chartOptions = {
+        xaxis: {
+          labels: {
+            style: {
+              colors: this.Xcolors,
+              fontSize: '12px'
+            }
+          }
+        }
+      };
+    }
   },
   methods: {
     formattime(data) {
@@ -50,32 +72,36 @@ export default {
         colors: ['#2C2C2C', '#FFD700', '#C0C0C0', '#708090'],
         chart: {
           type: 'bar',
-          height: 350,
+          height: '95%',
           stacked: true,
-          stackType: '100%'
-        },
-        responsive: [
-          {
-            breakpoint: 480,
-            options: {
-              legend: {
-                position: 'bottom',
-                offsetX: -10,
-                offsetY: 0
-              }
+          stackType: '100%',
+          toolbar: {
+            show: false
+          },
+          events: {
+            click: (event, chartContext, config) => {
+              // current pic index
+              const PicIndex = config.dataPointIndex;
+              this.$emit('clicked', PicIndex);
             }
           }
-        ],
+        },
         xaxis: {
-          categories: name
+          categories: name,
+          labels: {
+            style: {
+              fontSize: '12px',
+              colors: this.Xcolors
+            }
+          }
         },
         fill: {
           opacity: 1
         },
         legend: {
-          position: 'top',
+          position: 'bottom',
           offsetX: 0,
-          offsetY: 20
+          offsetY: -5
         }
       };
       this.series = [
@@ -97,12 +123,8 @@ export default {
         }
       ];
     }
-  },
-  data() {
-    return {
-      series: [],
-      chartOptions: {}
-    };
   }
 };
 </script>
+<style scoped>
+</style>

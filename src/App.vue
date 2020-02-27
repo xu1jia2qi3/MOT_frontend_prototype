@@ -3,7 +3,7 @@
     <!-- header -->
     <myheader></myheader>
     <!-- left nav -->
-    <mynav></mynav>
+    <!-- <mynav></mynav> -->
     <!-- content -->
     <mycontent></mycontent>
     <!-- footer -->
