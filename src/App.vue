@@ -3,9 +3,9 @@
     <!-- header -->
     <myheader></myheader>
     <!-- left nav -->
-    <!-- <mynav></mynav> -->
+    <mynav></mynav>
     <!-- content -->
-    <mycontent></mycontent>
+    <router-view></router-view>
     <!-- footer -->
     <myfooter></myfooter>
   </v-app>

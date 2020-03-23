@@ -8,7 +8,9 @@ import myfooter from './components/footer.vue';
 import mynav from './components/sidenav.vue';
 import mycontent from './components/content.vue';
 import myheader from './components/header.vue';
+import store from './store/store';
 
+require('./assets/bootstrap.css');
 
 Vue.config.productionTip = false;
 Vue.component('myfooter', myfooter);
@@ -21,5 +23,6 @@ Vue.component('sweetalert-icon', SweetAlertIcons);
 new Vue({
   router,
   vuetify,
+  store,
   render: h => h(App)
 }).$mount('#app');
