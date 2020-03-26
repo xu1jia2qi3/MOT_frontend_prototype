@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueApexCharts from 'vue-apexcharts';
 import SweetAlertIcons from 'vue-sweetalert-icons';
+import Vuelidate from 'vuelidate';
 import App from './App.vue';
 import router from './router';
 import vuetify from './plugins/vuetify';
@@ -10,7 +11,8 @@ import mycontent from './components/content.vue';
 import myheader from './components/header.vue';
 import store from './store/store';
 
-require('./assets/bootstrap.css');
+
+Vue.use(Vuelidate);
 
 Vue.config.productionTip = false;
 Vue.component('myfooter', myfooter);

@@ -1,56 +1,74 @@
 <template>
-  <div id="signup">
-    <div class="signup-form">
-      <form @submit.prevent="onSubmit">
-        <div class="input">
-          <label for="email">Email</label>
-          <input type="email" id="email" v-model="email" />
-        </div>
-        <div class="input">
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model="password" />
-        </div>
-        <div class="input">
-          <label for="confirm-password">Confirm Password</label>
-          <input type="password" id="confirm-password" v-model="confirmPassword" />
-        </div>
-        <div class="submit">
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+  <v-content app>
+    <div id="signup">
+      <div class="signup-form">
+        <form @submit.prevent="onSubmit">
+          <div class="input" :class="{invalid: $v.email.$error}">
+            <label for="email">Email</label>
+            <input type="email" id="email" @blur="$v.email.$touch()" v-model="email" />
+            <p v-if="!$v.email.email">Please provide a valid email address.</p>
+            <p id="emailerror">{{this.$store.state.emailerror}}</p>
+          </div>
+          <div class="input" :class="{invalid: $v.password.$error}">
+            <label for="password">Password</label>
+            <input type="password" id="password" @blur="$v.password.$touch()" v-model="password" />
+            <p
+              v-if="$v.password.$error"
+            >password should be minimal 8 alphanumeric include 1 number & 1 alphabet</p>
+          </div>
+          <div class="input" :class="{invalid: $v.confirmPassword.$error}">
+            <label for="confirm-password">Confirm Password</label>
+            <input
+              type="password"
+              id="confirm-password"
+              @blur="$v.confirmPassword.$touch()"
+              v-model="confirmPassword"
+            />
+            <p v-if="$v.confirmPassword.$error">password doesn't match</p>
+          </div>
+          <p id="register">{{this.$store.state.register}}</p>
+          <div class="submit">
+            <button type="submit" :disabled="$v.$invalid">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+  </v-content>
 </template>
 
 <script>
-import axios from 'axios';
+import {
+  required, email, minLength, sameAs
+} from 'vuelidate/lib/validators';
 
 export default {
   data() {
     return {
       email: '',
       password: '',
-      confirmPassword: '',
-      serverUrl: 'http://35.237.228.50:5000'
-      // serverUrl: 'http://127.0.0.1:5000'
+      confirmPassword: ''
     };
+  },
+  validations: {
+    email: {
+      required,
+      email
+    },
+    password: {
+      required,
+      minLen: minLength(8)
+    },
+    confirmPassword: {
+      sameAs: sameAs(vm => vm.password)
+    }
   },
   methods: {
     onSubmit() {
       const formData = {
         email: this.email,
-        password: this.password,
-        confirmPassword: this.confirmPassword
+        password: this.password
       };
-      console.log(formData);
-      axios
-        .post(`${this.serverUrl}/users/register`, formData)
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      this.$store.dispatch('register', formData);
     }
   }
 };
@@ -61,6 +79,12 @@ export default {
   height: 100%;
   width: 100%;
   background-color: white;
+}
+#emailerror {
+  color: red;
+}
+#register {
+  color: green;
 }
 .signup-form {
   width: 400px;
@@ -101,6 +125,15 @@ export default {
   outline: none;
   border: 1px solid #521751;
   background-color: #eee;
+}
+
+.input.invalid label {
+  color: red;
+}
+
+.input.invalid input {
+  border: 1px solid red;
+  background-color: #ffc9aa;
 }
 
 .input select {

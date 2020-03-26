@@ -1,22 +1,33 @@
 <template>
+<v-content app>
   <div id="dashboard">
     <h1>That's the dashboard!</h1>
     <p>You should only get here if you're authenticated!</p>
-    <p>your account is {{ email }}</p>
+    <p v-if="email">your account is {{ email }}</p>
+    <p v-if="cameras && email" >your cameras are {{ cameras }}</p>
   </div>
+  </v-content >
 </template>
 <script>
-// import axios from 'axios';
-import jwtDecode from 'jwt-decode';
-
 export default {
   data() {
-    const token = localStorage.usertoken;
-    const decoded = jwtDecode(token);
-    console.log(decoded);
-    return {
-      email: decoded.identity.account
-    };
+    return {};
+  },
+  computed: {
+    email() {
+      return !this.$store.getters.user ? false : this.$store.getters.user.email;
+    },
+    cameras() {
+      return !this.$store.getters.user ? false : this.$store.getters.user.cameras;
+    }
+  },
+  methods: {
+    onSubmit() {
+      this.$store.dispatch('dashboard');
+    }
+  },
+  created() {
+    this.onSubmit();
   }
 };
 </script>
@@ -25,13 +36,14 @@ export default {
   height: 100%;
   width: 100%;
   background-color: white;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
 }
 h1,
 p {
   text-align: center;
-}
-
-p {
   color: red;
 }
+
 </style>

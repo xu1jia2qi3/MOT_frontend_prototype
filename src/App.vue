@@ -15,8 +15,10 @@
 
 
 export default {
+  name: 'inspire',
   created() {
     this.$vuetify.theme.dark = true;
+    this.$store.dispatch('tryAutoLogin');
   }
 };
 </script>

@@ -198,6 +198,8 @@ export default {
       show_list: ['0', '1', '2', '3'],
       camera_pic: '',
       series: [],
+      // serverUrl: 'http://35.237.228.50:5000',
+      serverUrl: 'http://127.0.0.1:5000',
       chartOptions: {
         labels: [
           'Bare Pavement',
@@ -216,9 +218,7 @@ export default {
           foreColor: '#00000',
           type: 'donut'
         }
-      },
-      serverUrl: 'http://35.237.228.50:5000'
-      // serverUrl: 'http://127.0.0.1:5000'
+      }
     };
   },
   created() {

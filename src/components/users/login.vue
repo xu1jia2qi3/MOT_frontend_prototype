@@ -1,36 +1,44 @@
 <template>
-  <div id="signin">
-    <div class="signin-form">
-      <form @submit.prevent="onSubmit">
-        <div class="input">
-          <label for="email">Email</label>
-          <input type="email" id="email" v-model="email" />
-        </div>
-        <div class="input">
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model="password" />
-        </div>
-        <div class="submit">
-          <button type="submit">Sign in</button>
-        </div>
-      </form>
+  <v-content app>
+    <div id="signin">
+      <div class="signin-form">
+        <form @submit.prevent="onSubmit">
+          <div class="input">
+            <label for="email">Email</label>
+            <input type="email" id="email" @blur="$v.email.$touch()" v-model="email" />
+          </div>
+          <div class="input">
+            <label for="password">Password</label>
+            <input type="password" id="password" @blur="$v.password.$touch()" v-model="password" />
+          </div>
+          <p id="error" v-if="this.$store.state.wrongpassword">{{this.$store.state.wrongpassword}}</p>
+          <p id="error" v-if="this.$store.state.nouser">{{this.$store.state.nouser}}</p>
+          <div class="submit">
+            <button type="submit" :disabled="$v.$invalid">Sign in</button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+  </v-content>
 </template>
 
 <script>
-import axios from 'axios';
-// eslint-disable-next-line import/no-cycle
-import VueRouter from '../../router';
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   data() {
     return {
       email: '',
-      password: '',
-      // serverUrl: 'http://35.231.155.22:5000',
-      serverUrl: 'http://127.0.0.1:5000'
+      password: ''
     };
+  },
+  validations: {
+    email: {
+      required
+    },
+    password: {
+      required
+    }
   },
   methods: {
     onSubmit() {
@@ -38,20 +46,9 @@ export default {
         email: this.email,
         password: this.password
       };
-      console.log(formData);
-      axios
-        .post(`${this.serverUrl}/users/login`, formData)
-        .then(res => {
-          console.log(res);
-          localStorage.setItem('usertoken', res.data.token);
-          this.email = '';
-          this.password = '';
-          // eslint-disable-next-line no-undef
-          VueRouter.push({ name: 'Dashboard' });
-        })
-        .catch(err => {
-          console.log(`error! + ${err}`);
-        });
+      this.$store.dispatch('login', formData);
+      this.email = '';
+      this.password = '';
     }
   }
 };
@@ -63,7 +60,9 @@ export default {
   width: 100%;
   background-color: white;
 }
-
+#error {
+  color: red;
+}
 .signin-form {
   width: 400px;
   margin: 30px auto;
