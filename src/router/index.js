@@ -17,14 +17,6 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: DashboardPage
-    // beforeEnter(to, from, next) {
-    //   if (store.state.idToken) {
-    //     console.log(store.state.idToken);
-    //     next();
-    //   } else {
-    //     next('/login');
-    //   }
-    // }
   },
   { path: '*', redirect: '/' }
 ];

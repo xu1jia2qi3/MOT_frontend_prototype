@@ -68,7 +68,7 @@ export default new Vuex.Store({
               this.state.register = '';
             }, 3000);
           }
-          console.log(response);
+          // console.log(response);
         })
         .catch(error => {
           console.log(error);
@@ -82,10 +82,10 @@ export default new Vuex.Store({
       const expirationDate = localStorage.getItem('expirationDate');
       const now = new Date();
       if (now >= expirationDate) {
-        console.log('expire');
+        // console.log('expire');
         return;
       }
-      console.log('not expire');
+      // console.log('not expire');
 
 
       commit('authUser', {
@@ -99,7 +99,7 @@ export default new Vuex.Store({
           password: authData.password
         })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           if ('wrongpassword' in res.data) {
             this.state.wrongpassword = 'Wrong Password!';
             setTimeout(() => {
@@ -139,7 +139,7 @@ export default new Vuex.Store({
           access_token: this.state.idToken
         })
         .then(response => {
-          console.log(response);
+          // console.log(response);
           commit('User_dashboard', {
             email: response.data.user,
             cameras: response.data.cameras
