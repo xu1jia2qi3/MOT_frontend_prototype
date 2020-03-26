@@ -14,8 +14,8 @@ export default new Vuex.Store({
       cameras: []
     },
     idToken: null,
-    // serverUrl: 'http://35.237.228.50:5000',
-    serverUrl: 'http://127.0.0.1:5000',
+    serverUrl: 'http://35.237.228.50:5000',
+    // serverUrl: 'http://127.0.0.1:5000',
     emailerror: '',
     register: '',
     wrongpassword: '',
