@@ -198,8 +198,6 @@ export default {
       show_list: ['0', '1', '2', '3'],
       camera_pic: '',
       series: [],
-      // serverUrl: 'http://35.237.228.50:5000',
-      serverUrl: 'http://127.0.0.1:5000',
       chartOptions: {
         labels: [
           'Bare Pavement',
@@ -265,13 +263,13 @@ export default {
         // console.log(fixedNumber);
         this.probability = fixedNumber;
         this.current_camera = camera;
-        this.camera_pic = `${this.serverUrl}/Snapshot/${id}/${item}.jpg`;
+        this.camera_pic = `${this.$store.state.serverUrl}/Snapshot/${id}/${item}.jpg`;
       });
       // console.log(this.allPreds[id]);
       this.allPreds[id].forEach(item => {
         const timestamp = Object.keys(item);
         const EachPic = {
-          url: `${this.serverUrl}/Snapshot/${id}/${timestamp}.jpg`,
+          url: `${this.$store.state.serverUrl}/Snapshot/${id}/${timestamp}.jpg`,
           time: timestamp[0]
         };
         this.history_items.unshift(EachPic);
@@ -285,7 +283,7 @@ export default {
       retrain.set('result', result);
       axios({
         method: 'post',
-        url: `${this.serverUrl}/retrain`,
+        url: `${this.$store.state.serverUrl}/retrain`,
         data: retrain
       })
         .then(response => {
@@ -305,7 +303,7 @@ export default {
     getAllPreds() {
       const self = this;
       axios
-        .get(`${this.serverUrl}/database`)
+        .get(`${this.$store.state.serverUrl}/database`)
         .then(response => {
           Object.keys(response.data).forEach(key => {
             self.allPreds[key] = response.data[key];
