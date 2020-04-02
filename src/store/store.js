@@ -14,12 +14,13 @@ export default new Vuex.Store({
       cameras: []
     },
     idToken: null,
-    serverUrl: 'http://35.237.228.50:5000',
-    // serverUrl: 'http://127.0.0.1:5000',
+    // serverUrl: 'http://35.237.228.50:5000',
+    serverUrl: 'http://127.0.0.1:5000',
     emailerror: '',
     register: '',
     wrongpassword: '',
-    nouser: ''
+    nouser: '',
+    CamerasSwitch: false
   },
   getters: {
     user(state) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     isAuth(state) {
       return state.idToken !== null;
+    },
+    getCamerasSwitch(state) {
+      return state.CamerasSwitch;
     }
   },
   mutations: {
@@ -41,9 +45,44 @@ export default new Vuex.Store({
     },
     clearAuthData(state) {
       state.idToken = null;
+      state.user = null;
     }
   },
   actions: {
+    deleteList({ commit }, userData) {
+      axios
+        .post(`${this.state.serverUrl}/users/delete`, {
+          access_token: this.state.idToken,
+          Data: userData.list
+        })
+        .then(response => {
+          // console.log(response);
+          commit('User_dashboard', {
+            email: response.data.user,
+            cameras: response.data.cameras
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    updateList({ commit }, userData) {
+      axios
+        .post(`${this.state.serverUrl}/users/favorite`, {
+          access_token: this.state.idToken,
+          Data: userData
+        })
+        .then(response => {
+          // console.log(response);
+          commit('User_dashboard', {
+            email: response.data.user,
+            cameras: response.data.cameras
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     setLogoutTimer({ commit, dispatch }, expirationTime) {
       setTimeout(() => {
         dispatch('logout');

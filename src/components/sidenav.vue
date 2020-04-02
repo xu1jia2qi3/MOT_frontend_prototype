@@ -2,8 +2,8 @@
 <template>
   <v-navigation-drawer app clipped expand-on-hover permanent>
     <!-- v-model="drawer"  -->
-    <!-- <v-list dense>
-      <v-list-item link v-for="link in links" :key="link.text" :to="link.route">
+    <v-list dense flat>
+      <v-list-item link v-for="link in filterdList" :key="link.text" :to="link.route">
         <v-list-item-action>
           <v-icon>{{ link.icon}}</v-icon>
         </v-list-item-action>
@@ -11,36 +11,6 @@
           <v-list-item-title>{{link.text}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <p>{{ auth }}</p>
-    </v-list>-->
-    <v-list dense>
-      <v-list-item link :to="'/register'" v-if="!auth">
-        <v-list-item-action>
-          <v-icon>mdi-pencil</v-icon>
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>Register</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <!-- ##### -->
-      <v-list-item link :to="'/login'" v-if="!auth">
-        <v-list-item-action>
-          <v-icon>mdi-account</v-icon>
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>Login</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <!-- ##### -->
-      <v-list-item link :to="'/dashboard'" v-if="auth">
-        <v-list-item-action>
-          <v-icon>mdi-view-dashboard</v-icon>
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>Dashboard</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <!-- #### -->
       <v-list-item link :to="'/'">
         <v-list-item-action>
           <v-icon>mdi-map-check-outline</v-icon>
@@ -49,8 +19,7 @@
           <v-list-item-title>Back to Map</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <!-- ### -->
-      <v-list-item v-if="auth" @click="onLogout" id='logout'>
+      <v-list-item v-if="auth" @click="onLogout" id="logout">
         <v-list-item-action>
           <v-icon>mdi-logout-variant</v-icon>
         </v-list-item-action>
@@ -63,15 +32,21 @@
 </template>
 
 <script>
+import EventBus from './eventbus';
+
 export default {
   computed: {
     auth() {
       return !this.$store.getters.isAuth ? false : this.$store.getters.isAuth;
+    },
+    filterdList() {
+      return this.links.filter(item => item.requireAuth === this.auth);
     }
   },
   methods: {
     onLogout() {
       this.$store.dispatch('logout');
+      EventBus.$emit('trunswitch', false);
     }
   },
   data() {
@@ -80,17 +55,20 @@ export default {
         {
           icon: 'mdi-pencil',
           text: 'Register',
-          route: '/register'
+          route: '/register',
+          requireAuth: false
         },
         {
           icon: 'mdi-account',
           text: 'Login',
-          route: '/login'
+          route: '/login',
+          requireAuth: false
         },
         {
           icon: 'mdi-view-dashboard',
           text: 'Dashboard',
-          route: '/dashboard'
+          route: '/dashboard',
+          requireAuth: true
         }
       ]
     };
@@ -98,8 +76,9 @@ export default {
 };
 </script>
 <style scoped>
-#logout{
-  margin:auto;
-  top:76vh;
+#logout {
+  margin: auto;
+  top: 76vh;
+  /* bottom: 0%; */
 }
 </style>

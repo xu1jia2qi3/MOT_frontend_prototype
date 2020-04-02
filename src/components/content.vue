@@ -18,6 +18,13 @@
           <img class="barSamples" src="../assets/camera.png" alt />
           <v-checkbox color="white" v-model="show_list" label="Not Recognizable" value="3"></v-checkbox>
         </div>
+        <v-switch
+          v-if="auth"
+          v-model="switch1"
+          color="#00B0FF"
+          inset
+          :label="switch1 === true ? 'My Cameras' : 'All Cameras'"
+        ></v-switch>
       </div>
     </v-toolbar>
     <google-map
@@ -42,7 +49,24 @@
         ></google-marker>
       </google-cluster>
     </google-map>
-
+    <v-snackbar
+      class="snackbar"
+      v-if="isActive"
+      color="success"
+      top
+      absolute
+      v-model="snackbar"
+      :timeout="1000"
+    >Added to My Favorite Cameras List Successfully!</v-snackbar>
+    <v-snackbar
+      class="snackbar"
+      v-if="!isActive"
+      color="error"
+      top
+      absolute
+      v-model="snackbar"
+      :timeout="1000"
+    >Removed from My Favorite Cameras List Successfully!</v-snackbar>
     <v-navigation-drawer
       v-model="drawer"
       absolute
@@ -54,6 +78,16 @@
       <div class="TopHalf">
         <h3 class="top_title">Camera: {{ current_camera.Id }} Latest Condition</h3>
         <img class="currentPic" v-bind:src="camera_pic" />
+        <v-btn
+          v-if="auth"
+          class="likebutton"
+          icon
+          v-bind:color="isActive === true ? 'pink' : 'grey'"
+          @click="toggleClass()"
+        >
+          <v-icon>mdi-heart</v-icon>
+        </v-btn>
+        <span v-if="auth">Save to My Cameras</span>
       </div>
       <div class="BotHalf">
         <h3 style="height:10%; text-align:center">Snow Coverage Analysis</h3>
@@ -145,6 +179,7 @@ import axios from 'axios';
 import GmapCluster from 'vue2-google-maps/dist/components/cluster';
 import cameraData from '../views/Camera/camera.json';
 import Chart from './chart.vue';
+import EventBus from './eventbus';
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -166,6 +201,9 @@ export default {
   },
   data() {
     return {
+      switch1: false,
+      snackbar: false,
+      isActive: false,
       model: 11,
       reTraining: 'Bare Pavement',
       dialog4: true,
@@ -220,14 +258,45 @@ export default {
     };
   },
   created() {
+    EventBus.$on('trunswitch', data => {
+      this.switch1 = data;
+    });
     this.getAllPreds();
   },
   computed: {
+    auth() {
+      return !this.$store.getters.isAuth ? false : this.$store.getters.isAuth;
+    },
+    toggleList() {
+      return !this.switch1 ? this.camera_list : this.$store.state.user.cameras;
+    },
     filteredList() {
-      return this.camera_list.filter(item => this.isMarkerShow(item.Url));
+      return this.toggleList.filter(item => this.isMarkerShow(item.Url));
+    },
+    usercameras() {
+      return !this.$store.getters.user
+        ? false
+        : this.$store.getters.user.cameras;
     }
   },
   methods: {
+    nameset(CurrentCamera) {
+      const cameras = !this.$store.getters.user
+        ? []
+        : this.$store.getters.user.cameras;
+
+      const nameset = new Set(cameras.map(item => item.Id));
+      this.isActive = nameset.has(CurrentCamera.Id);
+    },
+    toggleClass() {
+      this.isActive = !this.isActive;
+      this.snackbar = true;
+      const formData = {
+        isActive: this.isActive,
+        Data: this.current_camera
+      };
+      this.$store.dispatch('updateList', formData);
+    },
     onClickChild(value) {
       if (value !== -1) {
         this.model = value;
@@ -239,6 +308,7 @@ export default {
       this.$refs.chart.showData();
     },
     toggleInfoWindow(camera) {
+      this.nameset(camera);
       this.history_items = [];
       this.history_data = [];
       this.drawer = true;
@@ -302,6 +372,7 @@ export default {
     },
     getAllPreds() {
       const self = this;
+
       axios
         .get(`${this.$store.state.serverUrl}/database`)
         .then(response => {
@@ -363,6 +434,12 @@ export default {
 };
 </script>
 <style scoped>
+/* .snackbar{
+  justify-content: center !important;
+} */
+/* .likebutton{
+  right: -17vw;
+} */
 #inspire {
   height: 100vh;
 }
@@ -445,7 +522,6 @@ export default {
 }
 .top_title {
   font-size: 1vw;
-  width: 60%;
   align-self: center;
 }
 </style>
