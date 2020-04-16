@@ -5,19 +5,20 @@
       <p v-if="!auth">You should only get here if you're authenticated!</p>
       <p v-if="email">Welcome: {{ email }}</p>
       <v-container class="cardcontainer">
-        <v-card v-if="cameras.length !== 0 && email" light width ='100%' max-height="500px">
+        <v-card v-if="cameras.length !== 0 && email" light width="100%" max-height="500px">
+          <v-btn outlined color="black" @click="toggle1()">
+            Email Notification
+            <v-icon dark right>mdi-email-newsletter</v-icon>
+          </v-btn>
+
           <v-list shaped class="card-body">
             <v-list-item-group v-model="selectedcameras" multiple>
               <template v-for="(item, i) in cameras">
                 <v-list-item :key="`item-${i}`" :value="item" active-class="light-green">
                   <template v-slot:default="{ active, toggle }">
                     <v-list-item-content>
-                      <v-list-item-title
-                        v-text="`Camera ${i}`"
-                      ></v-list-item-title>
-                      <v-list-item-title
-                        v-text="`Id:${item.Id}`"
-                      ></v-list-item-title>
+                      <v-list-item-title v-text="`Camera ${i}`"></v-list-item-title>
+                      <v-list-item-title v-text="`Id:${item.Id}`"></v-list-item-title>
                     </v-list-item-content>
 
                     <v-list-item-action>
@@ -54,6 +55,38 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <v-dialog v-model="dialog2" max-width="400" light>
+        <v-card min-height="160" class="text-center">
+          <v-card-title class="headline">Your Email Notification is {{ switch1 ? 'On' : 'Off' }}</v-card-title>
+          <v-btn
+            large
+            icon
+            v-bind:color="switch1 === true ? 'blue' : 'grey'"
+            @click="toggleClass()"
+          >
+            <v-icon v-if="switch1">mdi-bell-ring-outline</v-icon>
+            <v-icon v-if="!switch1">mdi-bell-off-outline</v-icon>
+          </v-btn>
+          <v-snackbar
+            class="snackbar"
+            v-if="switch1"
+            color="success"
+            bottom
+            absolute
+            v-model="snackbar1"
+            :timeout="2000"
+          >Email Notification Turned On</v-snackbar>
+          <v-snackbar
+            class="snackbar"
+            v-if="!switch1"
+            color="error"
+            bottom
+            absolute
+            v-model="snackbar1"
+            :timeout="2000"
+          >Email Notification Turned Off</v-snackbar>
+        </v-card>
+      </v-dialog>
       <v-snackbar
         color="success"
         bottom
@@ -70,8 +103,11 @@
 export default {
   data() {
     return {
+      switch1: true,
       snackbar: null,
+      snackbar1: null,
       dialog: false,
+      dialog2: false,
       selectedcameras: []
     };
   },
@@ -90,6 +126,18 @@ export default {
     }
   },
   methods: {
+    toggle1() {
+      this.dialog2 = true;
+      this.switch1 = this.$store.getters.user.auto_email;
+    },
+    toggleClass() {
+      this.switch1 = !this.switch1;
+      const formData = {
+        isEnable: this.switch1
+      };
+      this.$store.dispatch('updateNotice', formData);
+      this.snackbar1 = true;
+    },
     canceldialog() {
       this.dialog = false;
       this.selectedcameras = [];

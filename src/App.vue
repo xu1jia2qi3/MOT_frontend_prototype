@@ -12,8 +12,6 @@
 </template>
 
 <script>
-
-
 export default {
   name: 'inspire',
   created() {

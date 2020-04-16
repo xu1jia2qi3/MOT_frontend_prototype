@@ -11,7 +11,8 @@ export default new Vuex.Store({
   state: {
     user: {
       email: '',
-      cameras: []
+      cameras: [],
+      auto_email: false
     },
     idToken: null,
     serverUrl: 'http://35.237.228.50:5000',
@@ -40,7 +41,8 @@ export default new Vuex.Store({
     User_dashboard(state, UserData) {
       state.user = {
         email: UserData.email,
-        cameras: UserData.cameras
+        cameras: UserData.cameras,
+        auto_email: UserData.auto_email
       };
     },
     clearAuthData(state) {
@@ -77,6 +79,24 @@ export default new Vuex.Store({
           commit('User_dashboard', {
             email: response.data.user,
             cameras: response.data.cameras
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    updateNotice({ commit }, userData) {
+      axios
+        .post(`${this.state.serverUrl}/users/notice`, {
+          access_token: this.state.idToken,
+          Data: userData
+        })
+        .then(response => {
+          console.log(response);
+          commit('User_dashboard', {
+            email: response.data.user,
+            cameras: response.data.cameras,
+            auto_email: response.data.auto_email
           });
         })
         .catch(error => {
@@ -181,7 +201,8 @@ export default new Vuex.Store({
           // console.log(response);
           commit('User_dashboard', {
             email: response.data.user,
-            cameras: response.data.cameras
+            cameras: response.data.cameras,
+            auto_email: response.data.auto_email
           });
         })
         .catch(error => {
