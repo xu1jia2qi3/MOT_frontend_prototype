@@ -92,7 +92,7 @@ export default new Vuex.Store({
           Data: userData
         })
         .then(response => {
-          console.log(response);
+          // console.log(response);
           commit('User_dashboard', {
             email: response.data.user,
             cameras: response.data.cameras,
