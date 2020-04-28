@@ -1,23 +1,19 @@
 <template>
   <v-content app>
-    <div id="signup">
-      <div class="signup-form">
+    <div id="signin">
+      <div class="signin-form">
         <form @submit.prevent="onSubmit">
-          <div class="input" :class="{invalid: $v.email.$error}">
-            <label for="email">Email</label>
-            <input type="email" id="email" @blur="$v.email.$touch()" v-model="email" />
-            <p v-if="!$v.email.email">Please provide a valid email address.</p>
-            <p id="emailerror">{{this.$store.state.emailerror}}</p>
-          </div>
+          <h1>Dear User</h1>
+          <p>Please enter your new password</p>
           <div class="input" :class="{invalid: $v.password.$error}">
-            <label for="password">Password</label>
+            <label for="password">New Password</label>
             <input type="password" id="password" @blur="$v.password.$touch()" v-model="password" />
             <p
               v-if="$v.password.$error"
             >password should be minimal 8 alphanumeric include 1 number & 1 alphabet</p>
           </div>
           <div class="input" :class="{invalid: $v.confirmPassword.$error}">
-            <label for="confirm-password">Confirm Password</label>
+            <label for="confirm-password">Confirm New Password</label>
             <input
               type="password"
               id="confirm-password"
@@ -30,30 +26,41 @@
           <div class="submit">
             <v-btn type="submit" :disabled="$v.$invalid" light outlined color="black">Submit</v-btn>
           </div>
+
+          <v-dialog v-model="dialog4" max-width="200px">
+            <h3 style="text-align:center;font-size:1.25rem">Resetting Password</h3>
+            <v-progress-linear color="deep-purple accent-4" indeterminate rounded height="6"></v-progress-linear>
+          </v-dialog>
         </form>
       </div>
     </div>
+    <v-snackbar
+      color="success"
+      top
+      absolute
+      v-model="snackbar"
+      :timeout="1500"
+    >Password Set Successfully!</v-snackbar>
   </v-content>
 </template>
 
 <script>
-import {
-  required, email, minLength, sameAs
-} from 'vuelidate/lib/validators';
+import { required, minLength, sameAs } from 'vuelidate/lib/validators';
+import axios from 'axios';
+// eslint-disable-next-line import/no-cycle
+import router from '../../router';
 
 export default {
   data() {
     return {
+      dialog4: false,
+      snackbar: false,
       email: '',
       password: '',
       confirmPassword: ''
     };
   },
   validations: {
-    email: {
-      required,
-      email
-    },
     password: {
       required,
       minLen: minLength(8)
@@ -64,29 +71,47 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.dialog4 = true;
       const formData = {
-        email: this.email,
+        reset_token: this.$route.params.token,
         password: this.password
       };
-      this.$store.dispatch('register', formData);
+      console.log(formData);
+      axios
+        .post(`${this.$store.state.serverUrl}/users/resetpassword`, formData)
+        .then(response => {
+          console.log(response);
+          this.dialog4 = false;
+          this.snackbar = true;
+          setTimeout(() => {
+            router.push({ name: 'Login' });
+          }, 2000);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };
 </script>
 
 <style scoped>
-#signup {
+h1,
+p {
+  color: black;
+}
+#forget {
+  text-decoration: none;
+}
+#signin {
   height: 100%;
   width: 100%;
   background-color: white;
 }
-#emailerror {
+#error {
   color: red;
 }
-#register {
-  color: green;
-}
-.signup-form {
+.signin-form {
   width: 400px;
   margin: auto;
   border: 1px solid #eee;
@@ -105,26 +130,18 @@ export default {
   margin-bottom: 6px;
 }
 
-.input.inline label {
-  display: inline;
+#emailerror {
+  color: red;
 }
-
+#register {
+  color: green;
+}
 .input input {
   font: inherit;
   width: 100%;
   padding: 6px 12px;
   box-sizing: border-box;
   border: 1px solid #ccc;
-}
-
-.input.inline input {
-  width: auto;
-}
-
-.input input:focus {
-  outline: none;
-  border: 1px solid #521751;
-  background-color: #eee;
 }
 
 .input.invalid label {
@@ -136,27 +153,10 @@ export default {
   background-color: #ffc9aa;
 }
 
-.input select {
-  border: 1px solid #ccc;
-  font: inherit;
-}
-
-.hobbies button {
+.input input:focus {
+  outline: none;
   border: 1px solid #521751;
-  background: #521751;
-  color: white;
-  padding: 6px;
-  font: inherit;
-  cursor: pointer;
-}
-
-.hobbies button:hover,
-.hobbies button:active {
-  background-color: #8d4288;
-}
-
-.hobbies input {
-  width: 90%;
+  background-color: #eee;
 }
 
 .submit button {
@@ -169,7 +169,7 @@ export default {
 
 .submit button:hover,
 .submit button:active {
-  background-color: #521751;
+  background-color: #1dcf4a;
   color: white;
 }
 
